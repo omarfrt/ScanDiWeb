@@ -4,10 +4,15 @@
 
     flex-direction: column;
     justify-content:left;
+    max-width: 386px;
+    height: 444px;
 }
 .card_body{
-max-width: 386px;
-max-height: 444px;
-text-align: left;
 
+text-align: left;
+padding: 16px;
+
+}
+.card_title{
+    margin-top: 24px;
 }

@@ -1,13 +1,12 @@
 import GlobalStyles from "./global/reset";
 import "./App.css";
-import Header from "./components/header";
-import ProductCard from "./components/productCard";
+import Category from "./pages/category";
+
 function App() {
   return (
     <div className="App">
       <GlobalStyles />
-      <Header />
-      <ProductCard/>
+      <Category />
     </div>
   );
 }
