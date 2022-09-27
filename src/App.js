@@ -1,12 +1,12 @@
 import GlobalStyles from "./global/reset";
 import "./App.css";
-import Category from "./pages/category";
+import Pdp from "./pages/pdp"
 
 function App() {
   return (
     <div className="App">
       <GlobalStyles />
-      <Category />
+      <Pdp/>
     </div>
   );
 }

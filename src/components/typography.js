@@ -44,20 +44,53 @@ export const SmallB = styled.p`
   color: #5ECE7B;
     
 `;
+/* product Title 1 */
+export const P1title = styled.p`
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 600;
+font-size: 30px;
+line-height: 27px;
+`;
+/* product title 2 */
+export const P2title = styled.p`
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 400;
+font-size: 30px;
+line-height: 27px;
+`;
+
+/* product title 2 */
+export const Price = styled.p`
+
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 18px;
+`;
+
+
 /* SIZE: */
 export const Size = styled.h4`
-  font-family: "Roboto Condensed";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 18px;
+Font family: Roboto Condensed
+Font style: Bold
+Font size: 18px
+Line height: 18px
+Line height: 85%
+Align: Center
+Vertical align: Center
 `;
 /* Description */
 
 export const Description = styled.p`
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 159.96%;
+Font family: Roboto
+Font style: Regular
+Font size: 16px
+Line height: 25.59px
+Line height: 159.96%
+Align: Left
+Vertical align: Top
 `;
+

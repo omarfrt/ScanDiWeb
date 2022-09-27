@@ -12,6 +12,8 @@ class ProductCardContainer extends React.Component {
         <ProductCard />
         <ProductCard />
         <ProductCard />
+        <ProductCard />
+        <ProductCard />
       </div>
     );
   }

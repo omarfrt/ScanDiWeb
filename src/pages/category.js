@@ -9,7 +9,9 @@ class Category extends React.Component {
       <div>
         <Header />
         <div className={Styles.wrapper}>
-          <Typography.H2> Category Name </Typography.H2>
+          <div className={Styles.category_name}>
+          <Typography.H2 > Category Name </Typography.H2>
+          </div>
           <ProductCardContainer />
         </div>
       </div>
