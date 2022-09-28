@@ -1,12 +1,12 @@
 import GlobalStyles from "./global/reset";
 import "./App.css";
-import Pdp from "./pages/pdp"
+import Cart from "./pages/cart";
 
 function App() {
   return (
     <div className="App">
       <GlobalStyles />
-      <Pdp/>
+      <Cart/>
     </div>
   );
 }

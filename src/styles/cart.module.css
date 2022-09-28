@@ -1,0 +1,15 @@
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+    margin-top: 80px;
+    
+}
+.page_title{
+    text-align: left;
+  
+    margin-bottom: 55px;
+}
+.cart_items{
+    
+}
