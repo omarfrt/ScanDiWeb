@@ -5,10 +5,10 @@ import {
   Redirect,
   Switch,
   Route,
-} from "react-router-dom"
+} from "react-router-dom";
 import CartPage from "./pages/cart";
 import CategoryPage from "./pages/category";
-import ProductPage from "./pages/pdp";
+import ProductPage from "./pages/product";
 
 function App() {
   return (
@@ -17,16 +17,16 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/product">
-            <ProductPage/>
+            <ProductPage />
           </Route>
           <Route exact path="/cart">
-            <CartPage/>
+            <CartPage />
           </Route>
           <Route component={CategoryPage} path="/:category">
-            <CategoryPage/>
+            <CategoryPage />
           </Route>
           <Route path="/">
-            <Redirect to="/tech"/>
+            <Redirect to="/tech" />
           </Route>
         </Switch>
       </Router>
