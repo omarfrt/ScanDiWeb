@@ -10,7 +10,8 @@ export const ALL_CATEGORIES = gql`
 export const CATEGORY_BY_NAME = gql`
   query categoryByName($title: String!) {
     category(input: { title: $title }) {
-      categoryByNameproducts {
+      name
+      products {
         id
         name
         inStock
@@ -21,7 +22,7 @@ export const CATEGORY_BY_NAME = gql`
           id
           name
           type
-          itmes {
+          items {
             displayValue
             value
             id

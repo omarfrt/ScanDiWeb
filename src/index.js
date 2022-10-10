@@ -7,14 +7,15 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/",
-  cashe: new InMemoryCache(),
+  cache: new InMemoryCache(),
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
 root.render(
-  <ApolloClient client={client}>
+  <ApolloProvider client={client}>
     <App />
-  </ApolloClient>
+  </ApolloProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

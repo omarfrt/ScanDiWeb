@@ -1,4 +1,5 @@
 import React from "react";
+import { Query } from "@apollo/client/react/components";
 import Header from "../components/header";
 import ProductCardContainer from "../components/productCartContainer";
 import * as Typography from "../components/typography";
@@ -6,6 +7,7 @@ import PageContainer from "../components/pageContainer";
 import ProductCard from "../components/productCard";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
+import { CATEGORY_BY_NAME } from "../queries/category";
 
 const Container = styled.section`
   display: flex;
@@ -25,14 +27,19 @@ class Category extends React.Component {
         <Container style={{ margin: "80px 0px 190px" }}>
           <Title>{title}</Title>
           <ProductCardContainer style={{ marginTop: 103 }}>
-            <ProductCard />
-            <ProductCard isDisabled />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            <Query query={CATEGORY_BY_NAME} variables={{ title }}>
+              {({ data, loading }) => {
+                if (loading) return "Loading...";
+
+                return (
+                  <>
+                    {data.category.products.map((product, index) => (
+                      <ProductCard key={index} product={product} />
+                    ))}
+                  </>
+                );
+              }}
+            </Query>
           </ProductCardContainer>
         </Container>
       </PageContainer>

@@ -53,8 +53,8 @@ const CardLink = styled(Link)`
 `;
 class ProductCard extends React.Component {
   render() {
-    const { isDisabled, onAddToCart } = this.props;
-
+    const { onAddToCart } = this.props;
+    const { name, prices, gallery, inStock, id } = this.props.product;
     const handleOnAddToCartClick = (e) => {
       e.stopPropagation();
       e.preventDefault();
@@ -62,18 +62,18 @@ class ProductCard extends React.Component {
     };
     return (
       <CardLink
-        to="/product"
-        tabIndex={isDisabled ? "-1" : "1"}
-        isDisabled={isDisabled}
+        to={`/product/${id}`}
+        tabIndex={!inStock ? "-1" : "1"}
+        isDisabled={!inStock}
       >
         <div style={{ position: "relative" }}>
-          <Cover src="/image.png" alt="Product" width="354px" height="330px" />
+          <Cover src={gallery[0]} alt="Product" width="354px" height="330px" />
           <CartButton onClick={handleOnAddToCartClick}>
             <img src="/empty_cart.svg" alt="cart" />
           </CartButton>
         </div>
-        <Title style={{ marginTop: 24 }}>Apollo Running Short</Title>
-        <Price>$50.00</Price>
+        <Title style={{ marginTop: 24 }}>{name}</Title>
+        <Price>{`${prices[0].currency.label} ${prices[0].amount}`}</Price>
       </CardLink>
     );
   }

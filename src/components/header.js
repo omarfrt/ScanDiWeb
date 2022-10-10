@@ -43,8 +43,8 @@ class Header extends React.Component {
     return (
       <Container>
         <LinksContainer>
-          {CATEGORIES.map((category) => (
-            <Link to={`/${category}`}>
+          {CATEGORIES.map((category, index) => (
+            <Link to={`/${category}`} key={index}>
               <HeaderLink key={category} isActive={categoryParam === category}>
                 {category}
               </HeaderLink>
