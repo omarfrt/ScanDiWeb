@@ -3,8 +3,11 @@ import * as Typography from "./typography";
 import styled from "styled-components";
 
 import { withRouter, Link } from "react-router-dom";
-
-const CATEGORIES = ["tech", "clothes", "something"];
+import { currency } from "../";
+import { Query } from "@apollo/client/react/components";
+import { ALL_CURRENCIES, CURRENT_CURRENCY } from "../queries/currency";
+const CATEGORIES = ["tech", "clothes", "all"];
+//reactive variables
 
 const HeaderLink = styled(Typography.Small)`
   text-transform: uppercase;
@@ -53,7 +56,31 @@ class Header extends React.Component {
         </LinksContainer>
         <Logo src="/a-logo.svg" alt="Logo" />
         <ActionsContainer>
-          <img src="/$v.svg" alt="Currency" />
+          <Query query={CURRENT_CURRENCY}>
+            {({ data: { currency: currentCurrency } }) => (
+              <Query query={ALL_CURRENCIES}>
+                {({ data, loading }) => {
+                  if (loading) return "Loading...";
+                  return (
+                    <select
+                      name="currencies"
+                      defaultValue={currentCurrency}
+                      onChange={(e) => {
+                        currency(e.target.value);
+                        localStorage.setItem("currency", e.target.value);
+                      }}
+                    >
+                      {data.currencies.map((currency, index) => (
+                        <option key={index} value={currency.label}>
+                          {currency.label} ({currency.symbol})
+                        </option>
+                      ))}
+                    </select>
+                  );
+                }}
+              </Query>
+            )}
+          </Query>
 
           <img src="/cart.svg" alt="cart" />
         </ActionsContainer>

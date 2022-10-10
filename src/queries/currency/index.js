@@ -8,3 +8,8 @@ export const ALL_CURRENCIES = gql`
     }
   }
 `;
+export const CURRENT_CURRENCY = gql`
+  query currency {
+    currency @client
+  }
+`;

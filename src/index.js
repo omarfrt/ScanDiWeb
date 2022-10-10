@@ -3,11 +3,37 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  gql,
+  makeVar,
+} from "@apollo/client";
 
+export const typeDefs = gql`
+  extend type Query {
+    currency: String
+  }
+`;
+export const currency = makeVar(localStorage.getItem("currency"));
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        currency: {
+          read() {
+            return currency();
+          },
+        },
+      },
+    },
+  },
+});
 const client = new ApolloClient({
   uri: "http://localhost:4000/",
-  cache: new InMemoryCache(),
+  cache,
+  typeDefs,
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

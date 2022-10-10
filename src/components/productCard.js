@@ -2,6 +2,8 @@ import React from "react";
 import * as Typography from "./typography";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Query } from "@apollo/client/react/components";
+import { CURRENT_CURRENCY } from "../queries/currency";
 
 const Cover = styled.img`
   opacity: 1;
@@ -73,7 +75,13 @@ class ProductCard extends React.Component {
           </CartButton>
         </div>
         <Title style={{ marginTop: 24 }}>{name}</Title>
-        <Price>{`${prices[0].currency.label} ${prices[0].amount}`}</Price>
+        <Query query={CURRENT_CURRENCY}>
+          {({ data: { currency }, loading }) => {
+            if (loading) return null;
+            const price = prices.find((p) => p.currency.label === currency);
+            return <Price>{`${price.currency.symbol} ${price.amount}`}</Price>;
+          }}
+        </Query>
       </CardLink>
     );
   }
