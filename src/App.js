@@ -16,7 +16,7 @@ function App() {
       <GlobalStyles />
       <Router>
         <Switch>
-          <Route exact path="/product">
+          <Route component={ProductPage} path="/product/:id">
             <ProductPage />
           </Route>
           <Route exact path="/cart">

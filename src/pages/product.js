@@ -4,6 +4,10 @@ import PdpImageContainer from "../components/pdpImageContainer";
 import PageContainer from "../components/pageContainer";
 import styled from "styled-components";
 import * as Typography from "../components/typography";
+import Attributes from "../components/attributes";
+import { withRouter } from "react-router-dom";
+import { PRODUCT_BY_ID } from "../queries/product";
+import { Query } from "@apollo/client/react/components";
 
 const Container = styled.div`
   display: flex;
@@ -16,12 +20,7 @@ const Title = styled.div`
     display:flex
     flex-direction: column;
     gap:16px`;
-const Size = styled.div`
-  margin-top: 43px;
-`;
-const Color = styled.div`
-  margin-top: 24px;
-`;
+
 const Price = styled.div`
   margin-top: 36px;
   display: flex;
@@ -36,52 +35,67 @@ const Description = styled.div`
   margin-top: 40px;
   width: 292px;
 `;
+
 class Product extends React.Component {
   render() {
+    const id = this.props.match.params.id;
+    function createMarkup(data) {
+      return { __html: data };
+    }
     return (
       <PageContainer>
         <Header />
         <Container>
           <PdpImageContainer />
+          <Query query={PRODUCT_BY_ID} variables={{ id }}>
+            {({ data, loading }) => {
+              if (loading) return "Loading...";
+              return (
+                <>
+                  <div>
+                    <img
+                      src={data.product.gallery[0]}
+                      alt="Product"
+                      width={"610px"}
+                      height={"511px"}
+                    />
+                  </div>
+                  <div>
+                    <Title>
+                      {data.product.name ? (
+                        <Typography.P1title>
+                          {data.product.name}
+                        </Typography.P1title>
+                      ) : null}
 
-          <div>
-            <img
-              src="./Image.png"
-              alt="Product"
-              width={"610px"}
-              height={"511px"}
-            />
-          </div>
-          <div>
-            <Title>
-              <Typography.P1title> Apollo</Typography.P1title>
-              <Typography.P2title> Running Short</Typography.P2title>
-            </Title>
-            <Size>
-              <Typography.Size>Size:</Typography.Size>
-            </Size>
-            <Color>
-              <Typography.Size>Color:</Typography.Size>
-            </Color>
-            <Price>
-              <Typography.Size>Price:</Typography.Size>
-              <Typography.Price>50.00$</Typography.Price>
-            </Price>
-            <ButtonAddToCart>
-              <button>ADD TO CART</button>
-            </ButtonAddToCart>
-            <Description>
-              <Typography.Description>
-                Find stunning women's cocktail dresses and party dresses. Stand
-                out in lace and metallic cocktail dresses and party dresses from
-                all your favorite brands.
-              </Typography.Description>
-            </Description>
-          </div>
+                      <Typography.P2title>
+                        {data.product.brand}
+                      </Typography.P2title>
+                    </Title>
+                    <Attributes attributes={data.product.attributes} />
+                    <Price>
+                      <Typography.Size>Price:</Typography.Size>
+                      <Typography.Price>50.00$</Typography.Price>
+                    </Price>
+                    <ButtonAddToCart>
+                      <button>ADD TO CART</button>
+                    </ButtonAddToCart>
+                    <Description>
+                      <Typography.Description
+                        dangerouslySetInnerHTML={createMarkup(
+                          data.product.description
+                        )}
+                      ></Typography.Description>
+                    </Description>
+                  </div>
+                </>
+              );
+            }}
+          </Query>
         </Container>
       </PageContainer>
     );
   }
 }
 
-export default Product;
+export default withRouter(Product);
