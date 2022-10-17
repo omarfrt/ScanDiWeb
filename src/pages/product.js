@@ -8,6 +8,8 @@ import Attributes from "../components/attributes";
 import { withRouter } from "react-router-dom";
 import { PRODUCT_BY_ID } from "../queries/product";
 import { Query } from "@apollo/client/react/components";
+import { ATCButton } from "../components/buttons";
+import { CURRENT_CURRENCY } from "../queries/currency";
 
 const Container = styled.div`
   display: flex;
@@ -45,21 +47,14 @@ class Product extends React.Component {
     return (
       <PageContainer>
         <Header />
-        <Container>
-          <PdpImageContainer />
-          <Query query={PRODUCT_BY_ID} variables={{ id }}>
-            {({ data, loading }) => {
-              if (loading) return "Loading...";
-              return (
-                <>
-                  <div>
-                    <img
-                      src={data.product.gallery[0]}
-                      alt="Product"
-                      width={"610px"}
-                      height={"511px"}
-                    />
-                  </div>
+
+        <Query query={PRODUCT_BY_ID} variables={{ id }}>
+          {({ data, loading }) => {
+            if (loading) return "Loading...";
+            return (
+              <>
+                <Container>
+                  <PdpImageContainer gallery={data.product.gallery} />
                   <div>
                     <Title>
                       {data.product.name ? (
@@ -74,11 +69,23 @@ class Product extends React.Component {
                     </Title>
                     <Attributes attributes={data.product.attributes} />
                     <Price>
-                      <Typography.Size>Price:</Typography.Size>
-                      <Typography.Price>50.00$</Typography.Price>
+                      <Query query={CURRENT_CURRENCY}>
+                        {({ data: { currency }, loading }) => {
+                          if (loading) return null;
+                          const price = data.product.prices.find(
+                            (p) => p.currency.label === currency
+                          );
+                          return (
+                            <>
+                              <Typography.Size>Price:</Typography.Size>
+                              <Typography.Price>{`${price.currency.symbol} ${price.amount}`}</Typography.Price>
+                            </>
+                          );
+                        }}
+                      </Query>
                     </Price>
                     <ButtonAddToCart>
-                      <button>ADD TO CART</button>
+                      <ATCButton>ADD TO CART</ATCButton>
                     </ButtonAddToCart>
                     <Description>
                       <Typography.Description
@@ -88,11 +95,11 @@ class Product extends React.Component {
                       ></Typography.Description>
                     </Description>
                   </div>
-                </>
-              );
-            }}
-          </Query>
-        </Container>
+                </Container>
+              </>
+            );
+          }}
+        </Query>
       </PageContainer>
     );
   }
