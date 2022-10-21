@@ -14,13 +14,59 @@ import {
 export const typeDefs = gql`
   extend type Query {
     currency: String
+    cart: [Product]
+  }
+  extend type Price {
+    currency: Currency!
+    amount: Float!
+  }
+
+  extend type Attribute {
+    displayValue: String
+    value: String
+    id: String!
+  }
+
+  extend type AttributeSet {
+    id: String!
+    name: String
+    type: String
+    items: [Attribute]
+  }
+
+  extend type Product {
+    id: String!
+    name: String!
+    inStock: Boolean
+    gallery: [String]
+    description: String!
+    category: String!
+    attributes: [AttributeSet]
+    prices: [Price!]!
+    brand: String!
+  }
+
+  extend type Category {
+    name: String
+    products: [Product]!
+  }
+
+  extend type Currency {
+    label: String!
+    symbol: String!
   }
 `;
+export const cart = makeVar([]);
 export const currency = makeVar(localStorage.getItem("currency"));
 const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
+        cart: {
+          read() {
+            return cart();
+          },
+        },
         currency: {
           read() {
             return currency();

@@ -8,8 +8,6 @@ import Attributes from "../components/attributes";
 import { withRouter } from "react-router-dom";
 import { PRODUCT_BY_ID } from "../queries/product";
 import { Query } from "@apollo/client/react/components";
-import { ATCButton } from "../components/buttons";
-import { CURRENT_CURRENCY } from "../queries/currency";
 
 const Container = styled.div`
   display: flex;
@@ -23,16 +21,6 @@ const Title = styled.div`
     flex-direction: column;
     gap:16px`;
 
-const Price = styled.div`
-  margin-top: 36px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-const ButtonAddToCart = styled.div`
-  margin-top: 20px;
-  background-color: #5ece7b;
-`;
 const Description = styled.div`
   margin-top: 40px;
   width: 292px;
@@ -67,26 +55,8 @@ class Product extends React.Component {
                         {data.product.brand}
                       </Typography.P2title>
                     </Title>
-                    <Attributes attributes={data.product.attributes} />
-                    <Price>
-                      <Query query={CURRENT_CURRENCY}>
-                        {({ data: { currency }, loading }) => {
-                          if (loading) return null;
-                          const price = data.product.prices.find(
-                            (p) => p.currency.label === currency
-                          );
-                          return (
-                            <>
-                              <Typography.Size>Price:</Typography.Size>
-                              <Typography.Price>{`${price.currency.symbol} ${price.amount}`}</Typography.Price>
-                            </>
-                          );
-                        }}
-                      </Query>
-                    </Price>
-                    <ButtonAddToCart>
-                      <ATCButton>ADD TO CART</ATCButton>
-                    </ButtonAddToCart>
+                    <Attributes product={data.product} />
+
                     <Description>
                       <Typography.Description
                         dangerouslySetInnerHTML={createMarkup(

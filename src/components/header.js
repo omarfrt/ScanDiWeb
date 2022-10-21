@@ -1,7 +1,7 @@
 import React from "react";
 import * as Typography from "./typography";
 import styled from "styled-components";
-
+import { CART } from "../queries/product";
 import { withRouter, Link } from "react-router-dom";
 import { currency } from "../";
 import { Query } from "@apollo/client/react/components";
@@ -38,6 +38,30 @@ const Logo = styled.img`
 const ActionsContainer = styled.div`
   display: flex;
   gap: 22px;
+`;
+const CartIconLayout = styled.div`
+  height: 20px;
+  width: 20px;
+  position: relative;
+  div {
+    background-color: black;
+    border-radius: 999px;
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 20px;
+    height: 20px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+  }
 `;
 class Header extends React.Component {
   render() {
@@ -81,8 +105,17 @@ class Header extends React.Component {
               </Query>
             )}
           </Query>
-
-          <img src="/cart.svg" alt="cart" />
+          <Link to="/cart">
+            <CartIconLayout>
+              <Query query={CART}>
+                {({ data: cartState }) => {
+                  if (!cartState.cart.length) return null;
+                  return <div>{cartState.cart.length}</div>;
+                }}
+              </Query>
+              <img src="/cart.svg" alt="cart" />
+            </CartIconLayout>
+          </Link>
         </ActionsContainer>
       </Container>
     );

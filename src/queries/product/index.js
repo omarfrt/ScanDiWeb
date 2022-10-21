@@ -30,3 +30,8 @@ export const PRODUCT_BY_ID = gql`
     }
   }
 `;
+export const CART = gql`
+  query cart {
+    cart @client
+  }
+`;
