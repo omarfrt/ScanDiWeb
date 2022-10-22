@@ -1,8 +1,6 @@
 import React from "react";
 import * as Typography from "../components/typography";
 import styled from "styled-components";
-import { Query } from "@apollo/client/react/components";
-import { PRODUCT_BY_ID } from "../queries/product";
 import CartImage from "./cartImage";
 import { ColorAttributes, OtherAttributes, PriceSection } from "./attributes";
 import { cart } from "..";
@@ -22,9 +20,6 @@ const Layout = styled.div`
 `;
 
 class CartItem extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   handleUpdateCartItem = (newAttribute) => {
     cart(
       this.props.cart.map((cartItem, index) => {
@@ -49,7 +44,7 @@ class CartItem extends React.Component {
   };
 
   render() {
-    const { index, product } = this.props;
+    const { product } = this.props;
     //idk why the querie returns size s l xl ... for shoes ?
     console.log({ product });
     return (

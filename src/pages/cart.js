@@ -30,9 +30,9 @@ class Cart extends React.Component {
           <Query query={CART}>
             {({ data, loading }) => {
               if (loading) return "loading ... ";
+              if (!data.cart) return null;
               return (
                 <>
-                  {console.log(data)}
                   {data.cart.map((product, index) => (
                     <>
                       <CartItem
@@ -43,18 +43,16 @@ class Cart extends React.Component {
                       />
                     </>
                   ))}
-
-                  {/* <div>
-                  <CartItem />
-                  <CartItem />
-                </div> */}
+                  <div>
+                    <CartTotal
+                      prices={data.cart.map((product) => product.prices)}
+                      quantity={data.cart.length}
+                    />
+                  </div>
                 </>
               );
             }}
           </Query>
-          <div>
-            <CartTotal />
-          </div>
         </Wrapper>
       </PageContainer>
     );
