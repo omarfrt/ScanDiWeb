@@ -57,8 +57,12 @@ export const typeDefs = gql`
     symbol: String!
   }
 `;
-export const cart = makeVar([]);
-export const currency = makeVar(localStorage.getItem("currency"));
+console.log({
+  currancy: localStorage.getItem("currency"),
+  cart: JSON.parse(localStorage.getItem("cart")),
+});
+export const cart = makeVar(JSON.parse(localStorage.getItem("cart")) || []);
+export const currency = makeVar(localStorage.getItem("currency") || "USD");
 const cache = new InMemoryCache({
   typePolicies: {
     Query: {

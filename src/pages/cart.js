@@ -43,12 +43,13 @@ class Cart extends React.Component {
                       />
                     </>
                   ))}
-                  <div>
+
+                  {data.cart.length && (
                     <CartTotal
                       prices={data.cart.map((product) => product.prices)}
                       quantity={data.cart.length}
                     />
-                  </div>
+                  )}
                 </>
               );
             }}

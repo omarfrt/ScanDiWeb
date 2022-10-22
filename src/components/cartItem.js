@@ -21,26 +21,22 @@ const Layout = styled.div`
 
 class CartItem extends React.Component {
   handleUpdateCartItem = (newAttribute) => {
-    cart(
-      this.props.cart.map((cartItem, index) => {
-        if (index !== this.props.index) {
-          return cartItem;
-        }
-        return {
-          ...cartItem,
-          attributes: cartItem.attributes.map((item) => {
-            if (!newAttribute[item.id]) {
-              return item;
-            }
-            return {
-              ...item,
-              selectedValue: newAttribute[item.id],
-            };
-          }),
-        };
-      })
-    );
-    console.log({ newatt: newAttribute });
+    const newCart = this.props.cart.map((cartItem, index) => {
+      if (index !== this.props.index) return cartItem;
+
+      return {
+        ...cartItem,
+        attributes: cartItem.attributes.map((item) => {
+          if (!newAttribute[item.id]) return item;
+          return {
+            ...item,
+            selectedValue: newAttribute[item.id],
+          };
+        }),
+      };
+    });
+    cart(newCart);
+    localStorage.setItem("cart", JSON.stringify(newCart));
   };
 
   render() {
