@@ -1,36 +1,62 @@
 import React from "react";
 import CartItem from "../components/cartItem";
 import Header from "../components/header";
-import Styles from "../styles/cart.module.css";
 import * as Typography from "../components/typography";
 import CartTotal from "../components/cartTotal";
 import { Query } from "@apollo/client/react/components";
 import { CART } from "../queries/product";
+import styled from "styled-components";
+import PageContainer from "../components/pageContainer";
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 100px;
+  margin-top: 80px;
+`;
+const PageTitle = styled.div`
+  text-align: left;
+  margin-bottom: 55px;
+`;
 class Cart extends React.Component {
   render() {
     return (
-      <div>
+      <PageContainer>
         <Header />
-        <div className={Styles.wrapper}>
+        <Wrapper>
+          <PageTitle>
+            <Typography.H2>Cart</Typography.H2>
+          </PageTitle>
           <Query query={CART}>
-            {({ data: cart }) => (
-              <>
-                {console.log(cart)}
-                <div className={Styles.page_title}>
-                  <Typography.H2>Cart</Typography.H2>
-                </div>
-                <div className={Styles.cart_items}>
+            {({ data, loading }) => {
+              if (loading) return "loading ... ";
+              return (
+                <>
+                  {console.log(data)}
+                  {data.cart.map((product, index) => (
+                    <>
+                      <CartItem
+                        product={product}
+                        key={index}
+                        index={index}
+                        cart={data.cart}
+                      />
+                    </>
+                  ))}
+
+                  {/* <div>
                   <CartItem />
                   <CartItem />
-                </div>
-                <div>
-                  <CartTotal />
-                </div>
-              </>
-            )}
+                </div> */}
+                </>
+              );
+            }}
           </Query>
-        </div>
-      </div>
+          <div>
+            <CartTotal />
+          </div>
+        </Wrapper>
+      </PageContainer>
     );
   }
 }

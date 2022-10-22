@@ -1,6 +1,4 @@
 import React from "react";
-import PdpImage from "./pdpImage";
-import Styles from "../styles/pdpImageContainer.module.css";
 import styled from "styled-components";
 
 const Wrapper = styled.div`

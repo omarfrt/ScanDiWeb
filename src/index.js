@@ -32,6 +32,7 @@ export const typeDefs = gql`
     name: String
     type: String
     items: [Attribute]
+    selectedValue: Attribute
   }
 
   extend type Product {

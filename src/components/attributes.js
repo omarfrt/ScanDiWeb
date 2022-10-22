@@ -28,7 +28,7 @@ const Color = styled.button`
   width: 36px;
   height: 36px;
   border: ${(props) =>
-    props.selected ? "1px solid #5ECE7B" : "1px solid white"};
+    props.selected ? "3px solid #5ECE7B" : "1px solid white"};
 `;
 const Price = styled.div`
   margin-top: 36px;
@@ -49,14 +49,19 @@ class Attributes extends React.Component {
       (acc, curr) => ({ ...acc, [curr.id]: "" }),
       {}
     );
+
     this.state = state;
   }
-  handleUpdate = (state) => {
-    this.setState(state);
+  handleUpdate = (newAttribute) => {
+    this.setState((prev) => ({
+      ...prev,
+      ...newAttribute,
+    }));
   };
 
   render() {
     const { product } = this.props;
+    console.log({ state: this.state });
     return (
       <>
         {product.attributes.map((attb, index) => {
@@ -80,7 +85,10 @@ class Attributes extends React.Component {
         <AddToCartButton
           product={{
             ...product,
-            attributes: this.state,
+            attributes: product.attributes.map((item) => ({
+              ...item,
+              selectedValue: this.state[item.id],
+            })),
           }}
         />
       </>
@@ -89,6 +97,7 @@ class Attributes extends React.Component {
 }
 class AddToCartButton extends React.Component {
   render() {
+    console.log(this.props.product);
     return (
       <Query query={CART}>
         {({ data: cartState }) => (
@@ -104,7 +113,7 @@ class AddToCartButton extends React.Component {
     );
   }
 }
-class PriceSection extends React.Component {
+export class PriceSection extends React.Component {
   render() {
     return (
       <>
@@ -128,9 +137,9 @@ class PriceSection extends React.Component {
     );
   }
 }
-class OtherAttributes extends React.Component {
+export class OtherAttributes extends React.Component {
   render() {
-    const { attribute, handleUpdate, state } = this.props;
+    const { attribute, handleUpdate, state = {} } = this.props;
     return (
       <>
         <Typography.Size>{attribute.name}</Typography.Size>
@@ -140,10 +149,9 @@ class OtherAttributes extends React.Component {
               key={index}
               selected={item.value === state[attribute.id]}
               onClick={() =>
-                handleUpdate((prev) => ({
-                  ...prev,
+                handleUpdate({
                   [attribute.id]: item.value,
-                }))
+                })
               }
             >
               {item.value}
@@ -155,9 +163,9 @@ class OtherAttributes extends React.Component {
   }
 }
 
-class ColorAttributes extends React.Component {
+export class ColorAttributes extends React.Component {
   render() {
-    const { attribute, handleUpdate, state } = this.props;
+    const { attribute, handleUpdate, state = {} } = this.props;
     return (
       <>
         <Typography.Size>{attribute.name}</Typography.Size>
@@ -167,10 +175,9 @@ class ColorAttributes extends React.Component {
               key={index}
               selected={item.value === state[attribute.id]}
               onClick={() =>
-                handleUpdate((prev) => ({
-                  ...prev,
+                handleUpdate({
                   [attribute.id]: item.value,
-                }))
+                })
               }
               style={{ background: `${item.value}` }}
             />

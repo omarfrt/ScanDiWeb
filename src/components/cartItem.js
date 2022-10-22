@@ -1,7 +1,11 @@
 import React from "react";
 import * as Typography from "../components/typography";
 import styled from "styled-components";
-
+import { Query } from "@apollo/client/react/components";
+import { PRODUCT_BY_ID } from "../queries/product";
+import CartImage from "./cartImage";
+import { ColorAttributes, OtherAttributes, PriceSection } from "./attributes";
+import { cart } from "..";
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -16,75 +20,67 @@ const Layout = styled.div`
   flex-direction: column;
   gap: 16px;
 `;
-const Size = styled.button`
-  width: 63px;
-  height: 45px;
-  border: 1px solid black;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: ${(props) => (props.selected ? "black" : "white")};
-  color: ${(props) => (props.selected ? "white" : "black")};
-`;
-const SizeLayout = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-`;
-const Color = styled.button`
-  width: 36px;
-  height: 36px;
-  border: ${(props) =>
-    props.selected ? "1px solid #5ECE7B" : "1px solid white"};
-`;
-
-const sizes = ["XS", "S", "M", "L", "XL"];
-const colors = ["blue", "red", "black", "white"];
 
 class CartItem extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { size: "", color: "" };
   }
+  handleUpdateCartItem = (newAttribute) => {
+    cart(
+      this.props.cart.map((cartItem, index) => {
+        if (index !== this.props.index) {
+          return cartItem;
+        }
+        return {
+          ...cartItem,
+          attributes: cartItem.attributes.map((item) => {
+            if (!newAttribute[item.id]) {
+              return item;
+            }
+            return {
+              ...item,
+              selectedValue: newAttribute[item.id],
+            };
+          }),
+        };
+      })
+    );
+    console.log({ newatt: newAttribute });
+  };
+
   render() {
+    const { index, product } = this.props;
+    //idk why the querie returns size s l xl ... for shoes ?
+    console.log({ product });
     return (
       <Wrapper>
         <Layout>
-          <Typography.P1title> Apollo</Typography.P1title>
-          <Typography.P2title> Running Short</Typography.P2title>
-          <Typography.Price>50.00$</Typography.Price>
-          <Typography.Size>SIZE:</Typography.Size>
-          <SizeLayout>
-            {sizes.map((item, index) => (
-              <Size
+          <Typography.P1title>{product.name}</Typography.P1title>
+          <Typography.P2title> {product.brand}</Typography.P2title>
+
+          {product.attributes.map((attb, index) => {
+            if (attb.id === "Color")
+              return (
+                <ColorAttributes
+                  attribute={attb}
+                  key={index}
+                  handleUpdate={this.handleUpdateCartItem}
+                  state={{ [attb.id]: attb.selectedValue }}
+                />
+              );
+            return (
+              <OtherAttributes
+                attribute={attb}
                 key={index}
-                selected={index === this.state.size}
-                onClick={() => this.setState({ size: index }).bind(this)}
-              >
-                {item}
-              </Size>
-            ))}
-          </SizeLayout>
-          <Typography.Size>Color:</Typography.Size>
-          <SizeLayout>
-            {colors.map((item, index) => (
-              <Color
-                key={index}
-                selected={index === this.state.color}
-                onClick={() => this.setState({ color: index }).bind(this)}
-                style={{ background: `${colors[index]}` }}
+                handleUpdate={this.handleUpdateCartItem}
+                state={{ [attb.id]: attb.selectedValue }}
               />
-            ))}
-          </SizeLayout>
+            );
+          })}
+          <PriceSection prices={product.prices} />
         </Layout>
         <>
-          <img
-            src="./Image.png"
-            alt="Product"
-            width={"200px"}
-            height={"288px"}
-          />
+          <CartImage gallery={product.gallery} />
         </>
       </Wrapper>
     );
