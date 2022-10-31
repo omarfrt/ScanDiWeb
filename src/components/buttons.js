@@ -30,7 +30,7 @@ export const OrderButton = styled.button`
   color: #ffffff;
 `;
 
-/** drop down cart view bag button */
+/** minicart view bag button */
 export const VBButton = styled.button`
   width: 140px;
   height: 43px;
@@ -41,9 +41,13 @@ export const VBButton = styled.button`
   line-height: 120%;
   text-align: center;
   text-transform: uppercase;
-  color: #1d1f22;
+  width: 140px;
+  height: 43px;
+
+  background: #ffffff;
+  border: 1px solid #1d1f22;
 `;
-/** drop down cart check out button */
+/** minicart check out button */
 export const COButton = styled.button`
   width: 140px;
   height: 43px;
@@ -54,5 +58,7 @@ export const COButton = styled.button`
   line-height: 120%;
   text-align: center;
   text-transform: uppercase;
-  color: #ffffff;
+  width: 140px;
+  height: 43px;
+  background: #5ece7b;
 `;
