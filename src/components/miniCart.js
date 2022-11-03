@@ -48,15 +48,16 @@ export default class MiniCart extends Component {
         <Wrapper>
           <Query query={CART}>
             {({ data, loading }) => {
+              const quantity = data.cart
+                .map((product) => product.quantity)
+                .reduce((a, b) => a + b, 0);
               if (loading) return "loading ... ";
               if (!data.cart) return null;
               return (
                 <>
                   <QuantityWrapper>
                     <Typography.SPrice>My Bag, </Typography.SPrice>
-                    <Typography.Price>
-                      {data.cart.length} items
-                    </Typography.Price>
+                    <Typography.Price>{quantity} items</Typography.Price>
                   </QuantityWrapper>
                   {data.cart.map((product, index) => (
                     <>
@@ -72,19 +73,19 @@ export default class MiniCart extends Component {
                   {data.cart.length && (
                     <MiniCartTotal
                       prices={data.cart.map((product) => product.prices)}
-                      quantity={data.cart.length}
+                      cart={data.cart}
                     />
                   )}
                 </>
               );
             }}
           </Query>
-          <ButtonWrapper>
-            <Link to={"/cart"}>
+          <Link to={"/cart"}>
+            <ButtonWrapper>
               <VBButton> VIEW BAG</VBButton>
               <COButton> CHECK OUT</COButton>
-            </Link>
-          </ButtonWrapper>
+            </ButtonWrapper>
+          </Link>
         </Wrapper>
       </div>
     );

@@ -104,6 +104,8 @@ class AddToCartButton extends React.Component {
           <ButtonAddToCart>
             <ATCButton
               onClick={() => {
+                const quantity = 1;
+                this.props.product.quantity = quantity;
                 const newCart = [...cartState.cart, this.props.product];
                 cart(newCart);
                 localStorage.setItem("cart", JSON.stringify(newCart));

@@ -20,18 +20,21 @@ const TotalWrapper = Styled.div`
 
 class CartTotal extends React.Component {
   render() {
-    const { prices } = this.props;
-    console.log(prices);
+    const { prices, cart } = this.props;
     return (
       <Wrapper>
         <Query query={CURRENT_CURRENCY}>
           {({ data: { currency }, loading }) => {
             if (loading) return null;
-            //s const price = prices.find((p) => p.currency.label === currency);
-            const total = prices
-              .map((prc) => prc.filter((p) => p.currency.label === currency))
-              .flat()
-              .reduce((prev, curr) => prev + curr.amount, 0);
+            const total = cart
+              .map(
+                (product) =>
+                  product.prices
+                    .filter((p) => p.currency.label === currency)
+                    .map((price) => price.amount)[0] * product.quantity
+              )
+              .reduce((a, b) => a + b, 0);
+
             const { symbol } = prices
               .flat()
               .find((p) => p.currency.label === currency).currency;

@@ -135,8 +135,11 @@ class Header extends React.Component {
             <CartIconLayout>
               <Query query={CART}>
                 {({ data: cartState }) => {
-                  if (!cartState.cart.length) return null;
-                  return <div>{cartState.cart.length}</div>;
+                  const quantity = cartState.cart
+                    .map((product) => product.quantity)
+                    .reduce((a, b) => a + b, 0);
+                  if (!quantity) return null;
+                  return <div>{quantity}</div>;
                 }}
               </Query>
               <img
