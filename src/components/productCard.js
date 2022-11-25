@@ -79,7 +79,11 @@ class ProductCard extends React.Component {
           {({ data: { currency }, loading }) => {
             if (loading) return null;
             const price = prices.find((p) => p.currency.label === currency);
-            return <Price>{`${price.currency.symbol} ${price.amount}`}</Price>;
+            return (
+              <Price>{`${price.currency.symbol} ${price.amount.toFixed(
+                2
+              )}`}</Price>
+            );
           }}
         </Query>
       </CardLink>
