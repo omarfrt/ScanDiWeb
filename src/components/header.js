@@ -6,8 +6,8 @@ import { withRouter, Link } from "react-router-dom";
 import { currency } from "../";
 import { Query } from "@apollo/client/react/components";
 import { ALL_CURRENCIES, CURRENT_CURRENCY } from "../queries/currency";
+import { ALL_CATEGORIES } from "../queries/category";
 import MiniCart from "./miniCart";
-const CATEGORIES = ["tech", "clothes", "all"];
 //reactive variables
 
 const HeaderLink = styled(Typography.Small)`
@@ -94,16 +94,25 @@ class Header extends React.Component {
       <Layout>
         <Container>
           <LinksContainer>
-            {CATEGORIES.map((category, index) => (
-              <Link to={`/${category}`} key={index}>
-                <HeaderLink
-                  key={category}
-                  isActive={categoryParam === category}
-                >
-                  {category}
-                </HeaderLink>
-              </Link>
-            ))}
+            <Query query={ALL_CATEGORIES}>
+              {({ data, loading }) => {
+                if (loading) return "loading...";
+                return (
+                  <>
+                    {data.categories.map((category, index) => (
+                      <Link to={`/${category.name}`} key={index}>
+                        <HeaderLink
+                          key={category.name}
+                          isActive={categoryParam === category.name}
+                        >
+                          {category.name}
+                        </HeaderLink>
+                      </Link>
+                    ))}
+                  </>
+                );
+              }}
+            </Query>
           </LinksContainer>
           <Logo src="/a-logo.svg" alt="Logo" />
           <ActionsContainer>
