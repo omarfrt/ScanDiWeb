@@ -56,7 +56,7 @@ const CardLink = styled(Link)`
 class ProductCard extends React.Component {
   render() {
     const { onAddToCart } = this.props;
-    const { name, prices, gallery, inStock, id } = this.props.product;
+    const { name, prices, gallery, inStock, id, brand } = this.props.product;
     const handleOnAddToCartClick = (e) => {
       e.stopPropagation();
       e.preventDefault();
@@ -74,7 +74,7 @@ class ProductCard extends React.Component {
             <img src="/empty_cart.svg" alt="cart" />
           </CartButton>
         </div>
-        <Title style={{ marginTop: 24 }}>{name}</Title>
+        <Title style={{ marginTop: 24 }}>{name + " " + brand}</Title>
         <Query query={CURRENT_CURRENCY}>
           {({ data: { currency }, loading }) => {
             if (loading) return null;
