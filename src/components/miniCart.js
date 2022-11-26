@@ -7,6 +7,7 @@ import MiniCartItem from "../components/miniCartItem";
 import MiniCartTotal from "../components/miniCartTotal";
 import { COButton, VBButton } from "./buttons";
 import { Link } from "react-router-dom";
+
 const Wrapper = styled.div`
   width: 325px;
   max-height: 600px;
@@ -14,6 +15,9 @@ const Wrapper = styled.div`
   background: #ffffff;
   overflow-y: scroll;
   padding: 32px 16px;
+  position: absolute;
+  right: 20px;
+  z-index: 10;
 `;
 const QuantityWrapper = styled.div`
   display: flex;
@@ -24,27 +28,35 @@ const ButtonWrapper = styled.div`
   gap: 12px;
   padding-top: 12px;
 `;
-
+const Container = styled.div`
+  position: fixed;
+  display: flex;
+  justifycontent: flex-end;
+  paddingright: 72px;
+  left: 0px;
+  top: 72px;
+  right: 0px;
+  z-index: 999;
+`;
+const Overlay = styled.div`
+  background-color: rgba(57, 55, 72, 0.22);
+  width: 100%;
+  height: 100vh;
+  top: 0px;
+  z-index: 1;
+  position: absolute;
+`;
 export default class MiniCart extends Component {
   render() {
-    const { open } = this.props;
+    const { open, onClickOutside } = this.props;
     if (!open) return null;
+
+    // container
+    //     minicart
+    //     overlay onclick
     return (
-      <div
-        style={{
-          position: "fixed",
-          display: "flex",
-          justifyContent: "flex-end",
-          paddingRight: "72px",
-          left: 0,
-          top: "80px",
-          right: 0,
-          backgroundColor: "rgba(57, 55, 72, 0.22)",
-          width: "100%",
-          height: "100vh",
-          zIndex: 999,
-        }}
-      >
+      <Container>
+        <Overlay onClick={onClickOutside} />
         <Wrapper>
           <Query query={CART}>
             {({ data, loading }) => {
@@ -87,7 +99,7 @@ export default class MiniCart extends Component {
             </ButtonWrapper>
           </Link>
         </Wrapper>
-      </div>
+      </Container>
     );
   }
 }

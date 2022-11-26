@@ -158,7 +158,10 @@ class Header extends React.Component {
               />
             </CartIconLayout>
 
-            <MiniCart open={this.state.isOpen} />
+            <MiniCart
+              open={this.state.isOpen}
+              onClickOutside={() => this.setState({ isOpen: false })}
+            />
           </ActionsContainer>
         </Container>
       </Layout>
