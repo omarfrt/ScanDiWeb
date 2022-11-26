@@ -16,9 +16,6 @@ const ProducImg = styled.img`
 `;
 
 class PdpImageContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <>

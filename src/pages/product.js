@@ -8,7 +8,7 @@ import Attributes from "../components/attributes";
 import { withRouter } from "react-router-dom";
 import { PRODUCT_BY_ID } from "../queries/product";
 import { Query } from "@apollo/client/react/components";
-
+import parse from "html-react-parser";
 const Container = styled.div`
   display: flex;
   flex-direction: row;
@@ -29,9 +29,7 @@ const Description = styled.div`
 class Product extends React.Component {
   render() {
     const id = this.props.match.params.id;
-    function createMarkup(data) {
-      return { __html: data };
-    }
+
     return (
       <PageContainer>
         <Header />
@@ -58,11 +56,9 @@ class Product extends React.Component {
                     <Attributes product={data.product} />
 
                     <Description>
-                      <Typography.Description
-                        dangerouslySetInnerHTML={createMarkup(
-                          data.product.description
-                        )}
-                      ></Typography.Description>
+                      <Typography.Description>
+                        {parse(data.product.description)}
+                      </Typography.Description>
                     </Description>
                   </div>
                 </Container>
