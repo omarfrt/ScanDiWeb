@@ -10,6 +10,7 @@ const Cover = styled.img`
 `;
 const Title = styled(Typography.PL)`
   color: #1d1f22;
+  margintop: 24px;
 `;
 const Price = styled(Typography.PM)`
   color: #1d1f22;
@@ -53,6 +54,9 @@ const CardLink = styled(Link)`
     opacity: ${({ isDisabled }) => (isDisabled ? 0 : 1)};
   }
 `;
+const ImgDiv = styled.div`
+  position: relative;
+`;
 class ProductCard extends React.Component {
   render() {
     const { onAddToCart } = this.props;
@@ -68,13 +72,13 @@ class ProductCard extends React.Component {
         tabIndex={!inStock ? "-1" : "1"}
         isDisabled={!inStock}
       >
-        <div style={{ position: "relative" }}>
+        <ImgDiv>
           <Cover src={gallery[0]} alt="Product" width="354px" height="330px" />
           <CartButton onClick={handleOnAddToCartClick}>
             <img src="/empty_cart.svg" alt="cart" />
           </CartButton>
-        </div>
-        <Title style={{ marginTop: 24 }}>{name + " " + brand}</Title>
+        </ImgDiv>
+        <Title>{name + " " + brand}</Title>
         <Query query={CURRENT_CURRENCY}>
           {({ data: { currency }, loading }) => {
             if (loading) return null;

@@ -13,6 +13,7 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin: 80px 0px 190px;
 `;
 const Title = styled(Typography.H2)`
   text-transform: capitalize;
@@ -24,9 +25,9 @@ class Category extends React.Component {
     return (
       <PageContainer>
         <Header />
-        <Container style={{ margin: "80px 0px 190px" }}>
+        <Container>
           <Title>{title}</Title>
-          <ProductCardContainer style={{ marginTop: 103 }}>
+          <ProductCardContainer>
             <Query query={CATEGORY_BY_NAME} variables={{ title }}>
               {({ data, loading }) => {
                 if (loading) return "Loading...";

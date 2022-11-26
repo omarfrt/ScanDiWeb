@@ -26,6 +26,7 @@ const Color = styled.button`
   height: 20px;
   border: ${(props) =>
     props.selected ? "3px solid #5ECE7B" : "1px solid white"};
+  background-color: ${(props) => props.color};
 `;
 const Price = styled.div`
   display: flex;
@@ -143,7 +144,7 @@ export class ColorAttributes extends React.Component {
                   [attribute.id]: item.value,
                 })
               }
-              style={{ background: `${item.value}` }}
+              color={item.value}
             />
           ))}
         </SizeLayout>
