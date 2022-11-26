@@ -8,8 +8,9 @@ import { CART } from "../queries/product";
 import { Query } from "@apollo/client/react/components";
 
 const Size = styled.button`
-  width: 63px;
-  height: 45px;
+  width: fit-content;
+  height: 24px;
+  padding: 0 4px;
   border: 1px solid black;
   text-align: center;
   display: flex;

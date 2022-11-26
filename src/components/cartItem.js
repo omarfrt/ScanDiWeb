@@ -65,23 +65,6 @@ class CartItem extends React.Component {
     cart(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
   };
-  handleUpdateCartItem = (newAttribute) => {
-    const newCart = this.props.cart.map((cartItem, index) => {
-      if (index !== this.props.index) return cartItem;
-      return {
-        ...cartItem,
-        attributes: cartItem.attributes.map((item) => {
-          if (!newAttribute[item.id]) return item;
-          return {
-            ...item,
-            selectedValue: newAttribute[item.id],
-          };
-        }),
-      };
-    });
-    cart(newCart);
-    localStorage.setItem("cart", JSON.stringify(newCart));
-  };
 
   render() {
     const { product } = this.props;
@@ -98,7 +81,6 @@ class CartItem extends React.Component {
                   <ColorAttributes
                     attribute={attb}
                     key={index}
-                    handleUpdate={this.handleUpdateCartItem}
                     state={{ [attb.id]: attb.selectedValue }}
                   />
                 );
@@ -106,7 +88,6 @@ class CartItem extends React.Component {
                 <OtherAttributes
                   attribute={attb}
                   key={index}
-                  handleUpdate={this.handleUpdateCartItem}
                   state={{ [attb.id]: attb.selectedValue }}
                 />
               );

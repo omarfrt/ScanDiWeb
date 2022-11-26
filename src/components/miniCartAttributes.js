@@ -5,8 +5,9 @@ import { CURRENT_CURRENCY } from "../queries/currency";
 import { Query } from "@apollo/client/react/components";
 
 const Size = styled.button`
-  width: 24px;
+  width: fit-content;
   height: 24px;
+  padding: 0 4px;
   border: 1px solid black;
   text-align: center;
   display: flex;
@@ -44,12 +45,6 @@ class MiniCartAttributes extends React.Component {
 
     this.state = state;
   }
-  handleUpdate = (newAttribute) => {
-    this.setState((prev) => ({
-      ...prev,
-      ...newAttribute,
-    }));
-  };
 
   render() {
     const { product } = this.props;
@@ -59,20 +54,8 @@ class MiniCartAttributes extends React.Component {
         <PriceSection prices={product.prices} />
         {product.attributes.map((attb, index) => {
           if (attb.id === "Color")
-            return (
-              <ColorAttributes
-                state={this.state}
-                handleUpdate={this.handleUpdate}
-                attribute={attb}
-              />
-            );
-          return (
-            <OtherAttributes
-              state={this.state}
-              handleUpdate={this.handleUpdate}
-              attribute={attb}
-            />
-          );
+            return <ColorAttributes state={this.state} attribute={attb} />;
+          return <OtherAttributes state={this.state} attribute={attb} />;
         })}
       </>
     );
@@ -104,21 +87,13 @@ export class PriceSection extends React.Component {
 }
 export class OtherAttributes extends React.Component {
   render() {
-    const { attribute, handleUpdate, state = {} } = this.props;
+    const { attribute, state = {} } = this.props;
     return (
       <>
         <Typography.Size>{attribute.name}</Typography.Size>
         <SizeLayout>
           {attribute.items.map((item, index) => (
-            <Size
-              key={index}
-              selected={item.value === state[attribute.id]}
-              onClick={() =>
-                handleUpdate({
-                  [attribute.id]: item.value,
-                })
-              }
-            >
+            <Size key={index} selected={item.value === state[attribute.id]}>
               {item.value}
             </Size>
           ))}
@@ -130,7 +105,7 @@ export class OtherAttributes extends React.Component {
 
 export class ColorAttributes extends React.Component {
   render() {
-    const { attribute, handleUpdate, state = {} } = this.props;
+    const { attribute, state = {} } = this.props;
     return (
       <>
         <Typography.Size>{attribute.name}</Typography.Size>
@@ -139,11 +114,6 @@ export class ColorAttributes extends React.Component {
             <Color
               key={index}
               selected={item.value === state[attribute.id]}
-              onClick={() =>
-                handleUpdate({
-                  [attribute.id]: item.value,
-                })
-              }
               color={item.value}
             />
           ))}
