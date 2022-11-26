@@ -4,7 +4,6 @@ import Styled from "styled-components";
 import { OrderButton } from "./buttons";
 import { Query } from "@apollo/client/react/components";
 import { CURRENT_CURRENCY } from "../queries/currency";
-import product from "../pages/product";
 
 const Wrapper = Styled.div`
   margin-top: 32px;

@@ -4,8 +4,6 @@ import styled from "styled-components";
 import CartImage from "./cartImage";
 import { ColorAttributes, OtherAttributes, PriceSection } from "./attributes";
 import { cart } from "..";
-import { CART } from "../queries/product";
-import { Query } from "@apollo/client/react/components";
 
 const Wrapper = styled.div`
   display: flex;
