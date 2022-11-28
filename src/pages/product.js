@@ -40,7 +40,10 @@ class Product extends React.Component {
             return (
               <>
                 <Container>
-                  <PdpImageContainer gallery={data.product.gallery} />
+                  <PdpImageContainer
+                    gallery={data.product.gallery}
+                    inStock={data.product.inStock}
+                  />
                   <div>
                     <Title>
                       {data.product.name ? (

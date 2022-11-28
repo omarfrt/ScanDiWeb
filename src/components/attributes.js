@@ -99,7 +99,6 @@ class Attributes extends React.Component {
 }
 class AddToCartButton extends React.Component {
   render() {
-    console.log(this.props.product);
     return (
       <Query query={CART}>
         {({ data: cartState }) => (
@@ -112,6 +111,7 @@ class AddToCartButton extends React.Component {
                 cart(newCart);
                 localStorage.setItem("cart", JSON.stringify(newCart));
               }}
+              disabled={this.props.product.inStock ? false : true}
             >
               ADD TO CART
             </ATCButton>

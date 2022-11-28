@@ -35,8 +35,8 @@ const CardLink = styled(Link)`
   padding: 16px;
   flex: 0 1 25%;
   cursor: pointer;
-  pointer-events: ${({ isDisabled }) => (isDisabled ? "none" : "all")};
-  ${Title}, ${Price} {
+  opacity: ${({ isDisabled }) => isDisabled && 0.5};
+  pointer-events: ${Title}, ${Price} {
     color: ${({ isDisabled }) => isDisabled && "#8D8F9A"};
   }
   ${Cover} {
@@ -44,14 +44,13 @@ const CardLink = styled(Link)`
   }
   &:hover,
   &:focus-within {
-    box-shadow: ${({ isDisabled }) =>
-      isDisabled ? "none" : "0px 4px 35px rgba(168, 172, 176, 0.19)"};
+    box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
   }
   ${CartButton} {
     opacity: 0;
   }
   &:hover ${CartButton} {
-    opacity: ${({ isDisabled }) => (isDisabled ? 0 : 1)};
+    opacity: 1;
   }
 `;
 const ImgDiv = styled.div`
