@@ -57,6 +57,20 @@ const CardLink = styled(Link)`
 const ImgDiv = styled.div`
   position: relative;
 `;
+const OutOfStock = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 160%;
+  display: flex;
+  align-items: center;
+  color: #8d8f9a;
+`;
 class ProductCard extends React.Component {
   render() {
     const { onAddToCart } = this.props;
@@ -66,6 +80,10 @@ class ProductCard extends React.Component {
       e.preventDefault();
       onAddToCart?.();
     };
+    let outOfStock;
+    if (!inStock) {
+      outOfStock = <OutOfStock>Out Of Stock</OutOfStock>;
+    }
     return (
       <CardLink
         to={`/product/${id}`}
@@ -74,6 +92,7 @@ class ProductCard extends React.Component {
       >
         <ImgDiv>
           <Cover src={gallery[0]} alt="Product" width="354px" height="330px" />
+          {outOfStock}
           <CartButton onClick={handleOnAddToCartClick}>
             <img src="/empty_cart.svg" alt="cart" />
           </CartButton>
