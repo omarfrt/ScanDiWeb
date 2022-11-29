@@ -42,7 +42,7 @@ class Product extends React.Component {
                 <Container>
                   <PdpImageContainer
                     gallery={data.product.gallery}
-                    inStock={data.product.inStock}
+                    inStock={data.product}
                   />
                   <div>
                     <Title>

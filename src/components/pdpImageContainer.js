@@ -9,12 +9,9 @@ const Wrapper = styled.div`
 const Thumbnail = styled.img`
   width: 79px;
   height: 80px;
-  opacity: ${({ isDisabled }) => isDisabled && 0.5};
+  opacity: ${({ isDisabled }) => (isDisabled ? 0.5 : 1)};
 `;
-const ProducImg = styled.img`
-  width: 610px;
-  height: 511px;
-`;
+const ProducImg = styled.img``;
 const OutOfStock = styled.div`
   position: absolute;
   top: 50%;
@@ -30,16 +27,13 @@ const OutOfStock = styled.div`
   color: #8d8f9a;
 `;
 const ProductImgWrapper = styled.div`
-  opacity: ${({ isDisabled }) => isDisabled && 0.5};
+  opacity: ${({ isDisabled }) => (isDisabled ? 0.5 : 1)};
 `;
 
 class PdpImageContainer extends React.Component {
   render() {
     const { inStock } = this.props.inStock;
-    let outOfStock;
-    if (!inStock) {
-      outOfStock = <OutOfStock>Out Of Stock</OutOfStock>;
-    }
+    console.log({ Boolean: inStock });
     return (
       <>
         <Wrapper>
@@ -51,7 +45,7 @@ class PdpImageContainer extends React.Component {
         </Wrapper>
         <ProductImgWrapper isDisabled={!inStock}>
           <ProducImg src={this.props.gallery[0]} alt="Thumbnail" />
-          {outOfStock}
+          {!inStock ? <OutOfStock>Out Of Stock</OutOfStock> : null}
         </ProductImgWrapper>
       </>
     );

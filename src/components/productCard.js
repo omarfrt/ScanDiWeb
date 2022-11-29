@@ -3,6 +3,8 @@ import * as Typography from "./typography";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Query } from "@apollo/client/react/components";
+import { cart } from "..";
+import { CART } from "../queries/product";
 import { CURRENT_CURRENCY } from "../queries/currency";
 
 const Cover = styled.img`
@@ -71,14 +73,18 @@ const OutOfStock = styled.div`
   color: #8d8f9a;
 `;
 class ProductCard extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const state = this.props.product.attributes.reduce(
+      (acc, curr) => ({ ...acc, [curr.id]: "" }),
+      {}
+    );
+
+    this.state = state;
+  }
   render() {
-    const { onAddToCart } = this.props;
     const { name, prices, gallery, inStock, id, brand } = this.props.product;
-    const handleOnAddToCartClick = (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      onAddToCart?.();
-    };
     let outOfStock;
     if (!inStock) {
       outOfStock = <OutOfStock>Out Of Stock</OutOfStock>;
@@ -92,9 +98,24 @@ class ProductCard extends React.Component {
         <ImgDiv>
           <Cover src={gallery[0]} alt="Product" width="354px" height="330px" />
           {outOfStock}
-          <CartButton onClick={handleOnAddToCartClick}>
-            <img src="/empty_cart.svg" alt="cart" />
-          </CartButton>
+          <Query query={CART}>
+            {({ data: cartState }) => (
+              <CartButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  const quantity = 1;
+                  this.props.product.quantity = quantity;
+                  const newCart = [...cartState.cart, this.props.product];
+                  cart(newCart);
+                  localStorage.setItem("cart", JSON.stringify(newCart));
+                }}
+                disabled={this.props.product.inStock ? false : true}
+              >
+                <img src="/empty_cart.svg" alt="cart" />
+              </CartButton>
+            )}
+          </Query>
         </ImgDiv>
         <Title>{name + " " + brand}</Title>
         <Query query={CURRENT_CURRENCY}>
