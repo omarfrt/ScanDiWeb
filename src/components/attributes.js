@@ -112,6 +112,7 @@ class AddToCartButton extends React.Component {
                 localStorage.setItem("cart", JSON.stringify(newCart));
               }}
               disabled={this.props.product.inStock ? false : true}
+              inStock={!this.props.product.inStock}
             >
               ADD TO CART
             </ATCButton>

@@ -14,6 +14,8 @@ export const ATCButton = styled.button`
   font-weight: 600;
   font-size: 16px;
   line-height: 120%;
+  opacity: ${(props) => (props.inStock ? "0.6" : "1")};
+  cursor: ${(props) => (props.inStock ? "not-allowed" : "pointer")};
 `;
 /** cart order button */
 export const OrderButton = styled.button`
