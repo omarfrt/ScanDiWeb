@@ -58,8 +58,13 @@ export default class CartImage extends Component {
     return (
       <Wrapper>
         <SliderWrapper>
-          <SliderButton onClick={this.handlePrevSlide}>{"<"}</SliderButton>
-          <SliderButton onClick={this.handleNextSlide}>{">"}</SliderButton>
+          {console.log(imgsrc.length)}
+          {imgsrc.length !== 1 ? (
+            <SliderButton onClick={this.handlePrevSlide}>{"<"}</SliderButton>
+          ) : null}
+          {imgsrc.length !== 1 ? (
+            <SliderButton onClick={this.handleNextSlide}>{">"}</SliderButton>
+          ) : null}
         </SliderWrapper>
         <Thumbnail src={imgsrc[this.state.current]} alt="thumbnail" />
       </Wrapper>
