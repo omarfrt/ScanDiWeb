@@ -3,9 +3,8 @@ import * as Typography from "./typography";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Query } from "@apollo/client/react/components";
-import { cart } from "..";
-import { CART } from "../queries/product";
 import { CURRENT_CURRENCY } from "../queries/currency";
+import PopupAttb from "./popupAttb";
 
 const Cover = styled.img`
   opacity: 1;
@@ -76,12 +75,9 @@ class ProductCard extends React.Component {
   constructor(props) {
     super(props);
 
-    const state = this.props.product.attributes.reduce(
-      (acc, curr) => ({ ...acc, [curr.id]: "" }),
-      {}
-    );
-
-    this.state = state;
+    this.state = {
+      isOpen: false,
+    };
   }
   render() {
     const { name, prices, gallery, inStock, id, brand } = this.props.product;
@@ -98,25 +94,27 @@ class ProductCard extends React.Component {
         <ImgDiv>
           <Cover src={gallery[0]} alt="Product" width="354px" height="330px" />
           {outOfStock}
-          <Query query={CART}>
-            {({ data: cartState }) => (
-              <CartButton
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  const quantity = 1;
-                  this.props.product.quantity = quantity;
-                  const newCart = [...cartState.cart, this.props.product];
-                  cart(newCart);
-                  localStorage.setItem("cart", JSON.stringify(newCart));
-                }}
-                disabled={this.props.product.inStock ? false : true}
-              >
-                <img src="/empty_cart.svg" alt="cart" />
-              </CartButton>
-            )}
-          </Query>
+
+          <CartButton
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              this.setState({ isOpen: !this.state.isOpen });
+            }}
+            disabled={this.props.product.inStock ? false : true}
+          >
+            <img src="/empty_cart.svg" alt="cart" />
+          </CartButton>
         </ImgDiv>
+        <PopupAttb
+          open={this.state.isOpen}
+          onClickOutside={() => this.setState({ isOpen: false })}
+          id={id}
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+          }}
+        />
         <Title>{name + " " + brand}</Title>
         <Query query={CURRENT_CURRENCY}>
           {({ data: { currency }, loading }) => {

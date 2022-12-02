@@ -62,7 +62,7 @@ class Attributes extends React.Component {
   };
 
   render() {
-    const { product } = this.props;
+    const { product, onClickOutside } = this.props;
     console.log({ state: this.state });
     return (
       <>
@@ -92,6 +92,7 @@ class Attributes extends React.Component {
               selectedValue: this.state[item.id],
             })),
           }}
+          onClickOutside={onClickOutside}
         />
       </>
     );
@@ -99,6 +100,7 @@ class Attributes extends React.Component {
 }
 class AddToCartButton extends React.Component {
   render() {
+    const { onClickOutside } = this.props;
     return (
       <Query query={CART}>
         {({ data: cartState }) => (
@@ -110,6 +112,7 @@ class AddToCartButton extends React.Component {
                 const newCart = [...cartState.cart, this.props.product];
                 cart(newCart);
                 localStorage.setItem("cart", JSON.stringify(newCart));
+                onClickOutside();
               }}
               disabled={this.props.product.inStock ? false : true}
               inStock={!this.props.product.inStock}
