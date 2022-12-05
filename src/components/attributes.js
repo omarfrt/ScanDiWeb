@@ -63,7 +63,7 @@ class Attributes extends React.Component {
 
   render() {
     const { product, onClickOutside } = this.props;
-    console.log({ state: this.state });
+    console.log({ state: Object.values(this.state).includes("") });
     return (
       <>
         {product.attributes.map((attb, index) => {
@@ -84,16 +84,18 @@ class Attributes extends React.Component {
           );
         })}
         <PriceSection prices={product.prices} />
-        <AddToCartButton
-          product={{
-            ...product,
-            attributes: product.attributes.map((item) => ({
-              ...item,
-              selectedValue: this.state[item.id],
-            })),
-          }}
-          onClickOutside={onClickOutside}
-        />
+        {!Object.values(this.state).includes("") ? (
+          <AddToCartButton
+            product={{
+              ...product,
+              attributes: product.attributes.map((item) => ({
+                ...item,
+                selectedValue: this.state[item.id],
+              })),
+            }}
+            onClickOutside={onClickOutside}
+          />
+        ) : null}
       </>
     );
   }
