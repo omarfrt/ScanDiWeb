@@ -8,6 +8,18 @@ export const H2 = styled.h2`
   font-size: 42px;
   line-height: 160%;
 `;
+export const Currency = styled.h2`
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 160%;
+  color: #1d1f22;
+  cursor: pointer;
+  &:hover {
+    background-color: #eeeeee;
+  }
+`;
 /* card Title */
 export const PL = styled.p`
   font-family: "Raleway";
@@ -46,39 +58,36 @@ export const SmallB = styled.p`
 `;
 /* product Title 1 */
 export const P1title = styled.p`
-font-family: 'Raleway';
-font-style: normal;
-font-weight: 600;
-font-size: 30px;
-line-height: 27px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 27px;
 `;
 /* product title 2 */
 export const P2title = styled.p`
-font-family: 'Raleway';
-font-style: normal;
-font-weight: 400;
-font-size: 30px;
-line-height: 27px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 27px;
 `;
 
 /* product title 2 */
 export const Price = styled.p`
-
-font-family: 'Raleway';
-font-style: normal;
-font-weight: 700;
-font-size: 24px;
-line-height: 18px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 18px;
 `;
 export const SPrice = styled.p`
-
-font-family: 'Raleway';
-font-style: normal;
-font-weight: 700;
-font-size: 24px;
-line-height: 18px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 18px;
 `;
-
 
 /* SIZE: */
 export const Size = styled.h4`
@@ -101,4 +110,3 @@ Line height: 159.96%
 Align: Left
 Vertical align: Top
 `;
-

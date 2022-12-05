@@ -3,11 +3,10 @@ import * as Typography from "./typography";
 import styled from "styled-components";
 import { CART } from "../queries/product";
 import { withRouter, Link } from "react-router-dom";
-import { currency } from "../";
 import { Query } from "@apollo/client/react/components";
-import { ALL_CURRENCIES, CURRENT_CURRENCY } from "../queries/currency";
 import { ALL_CATEGORIES } from "../queries/category";
 import MiniCart from "./miniCart";
+import CurencySelector from "./curencySelector";
 //reactive variables
 
 const HeaderLink = styled(Typography.Small)`
@@ -116,31 +115,7 @@ class Header extends React.Component {
           </LinksContainer>
           <Logo src="/a-logo.svg" alt="Logo" />
           <ActionsContainer>
-            <Query query={CURRENT_CURRENCY}>
-              {({ data: { currency: currentCurrency } }) => (
-                <Query query={ALL_CURRENCIES}>
-                  {({ data, loading }) => {
-                    if (loading) return "Loading...";
-                    return (
-                      <select
-                        name="currencies"
-                        defaultValue={currentCurrency}
-                        onChange={(e) => {
-                          currency(e.target.value);
-                          localStorage.setItem("currency", e.target.value);
-                        }}
-                      >
-                        {data.currencies.map((currency, index) => (
-                          <option key={index} value={currency.label}>
-                            {currency.label} ({currency.symbol})
-                          </option>
-                        ))}
-                      </select>
-                    );
-                  }}
-                </Query>
-              )}
-            </Query>
+            <CurencySelector />
             <CartIconLayout>
               <Query query={CART}>
                 {({ data: cartState }) => {

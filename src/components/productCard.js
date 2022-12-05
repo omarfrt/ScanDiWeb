@@ -136,31 +136,6 @@ class ProductCard extends React.Component {
               <img src="/empty_cart.svg" alt="cart" />
             </CartButton>
           )}
-
-          {/* {({ data: cartState }) => (
-              <CartButton
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  this.setState({ isOpen: !this.state.isOpen });
-                }}
-                disabled={this.props.product.inStock ? false : true}
-              >
-                <img src="/empty_cart.svg" alt="cart" />
-              </CartButton>
-            )}
-            {
-              <CartButton
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  this.setState({ isOpen: !this.state.isOpen });
-                }}
-                disabled={this.props.product.inStock ? false : true}
-              >
-                <img src="/empty_cart.svg" alt="cart" />
-              </CartButton>
-            } */}
         </ImgDiv>
         <PopupAttb
           open={this.state.isOpen}
