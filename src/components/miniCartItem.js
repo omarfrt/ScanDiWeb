@@ -88,8 +88,9 @@ class CartItem extends React.Component {
   };
 
   render() {
-    const { product } = this.props;
-    if (product.quantity !== 0)
+    const  product  = this.props.product.product;
+    const itemquantity = this.props.product.quantity
+    if (itemquantity > 0)
       return (
         <Wrapper>
           <Layout>
@@ -119,7 +120,7 @@ class CartItem extends React.Component {
 
           <QuantityWrapper>
             <AddProduct onClick={this.handleaddQuantity}>+</AddProduct>
-            <Typography.Price>{product.quantity}</Typography.Price>
+            <Typography.Price>{itemquantity}</Typography.Price>
             <RemoveProduct onClick={this.handleRemoveQuantity}>-</RemoveProduct>
           </QuantityWrapper>
           <Thumbnail src={product.gallery[0]} alt="thumbnail" />

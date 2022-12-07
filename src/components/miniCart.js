@@ -50,7 +50,7 @@ export default class MiniCart extends Component {
   render() {
     const { open, onClickOutside } = this.props;
     if (!open) return null;
-
+    const result =[]
     // container
     //     minicart
     //     overlay onclick
@@ -71,7 +71,14 @@ export default class MiniCart extends Component {
                     <Typography.SPrice>My Bag, </Typography.SPrice>
                     <Typography.Price>{quantity} items</Typography.Price>
                   </QuantityWrapper>
-                  {data.cart.map((product, index) => (
+                  {data.cart.forEach(function (a) {
+                          if (!this[a.attributes.map(e=> e.selectedValue)]) {
+                              this[a.attributes.map(e=> e.selectedValue)] = { product: a , quantity : 0 };
+                              result.push(this[a.attributes.map(e=> e.selectedValue)]);
+                            }
+                               this[a.attributes.map(e=> e.selectedValue)].quantity += a.quantity;
+                              }, [])}
+                  {result.map((product, index) => (
                     <>
                       <MiniCartItem
                         product={product}
@@ -81,13 +88,29 @@ export default class MiniCart extends Component {
                       />
                     </>
                   ))}
-
                   {data.cart.length && (
                     <MiniCartTotal
                       prices={data.cart.map((product) => product.prices)}
                       cart={data.cart}
                     />
                   )}
+                  {/* {data.cart.map((product, index) => (
+                    <>
+                      <MiniCartItem
+                        product={product}
+                        key={index}
+                        index={index}
+                        cart={data.cart}
+                      />
+                    </>
+                  ))} */}
+
+                  {/* {data.cart.length && (
+                    <MiniCartTotal
+                      prices={data.cart.map((product) => product.prices)}
+                      cart={data.cart}
+                    />
+                  )} */}
                 </>
               );
             }}
