@@ -88,8 +88,8 @@ class CartItem extends React.Component {
   };
 
   render() {
-    const  product  = this.props.product.product;
-    const itemquantity = this.props.product.quantity
+    const product = this.props.product.product;
+    const itemquantity = this.props.product.quantity;
     if (itemquantity > 0)
       return (
         <Wrapper>
