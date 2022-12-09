@@ -59,7 +59,7 @@ export default class MiniCart extends Component {
         <Wrapper>
           <Query query={CART}>
             {({ data, loading }) => {
-              const result = [];
+              let result = [];
               const quantity = data.cart
                 .map((product) => product.quantity)
                 .reduce((a, b) => a + b, 0);

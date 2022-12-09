@@ -29,11 +29,25 @@ class Cart extends React.Component {
           </PageTitle>
           <Query query={CART}>
             {({ data, loading }) => {
+              let result = [];
               if (loading) return "loading ... ";
               if (!data.cart) return null;
               return (
                 <>
-                  {data.cart.map((product, index) => (
+                  {data.cart.forEach(function (a) {
+                    if (!this[a.attributes.map((e) => e.selectedValue)]) {
+                      this[a.attributes.map((e) => e.selectedValue)] = {
+                        product: a,
+                        quantity: 0,
+                      };
+                      result.push(
+                        this[a.attributes.map((e) => e.selectedValue)]
+                      );
+                    }
+                    this[a.attributes.map((e) => e.selectedValue)].quantity +=
+                      a.quantity;
+                  }, [])}
+                  {result.map((product, index) => (
                     <>
                       <CartItem
                         product={product}

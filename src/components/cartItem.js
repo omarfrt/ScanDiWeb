@@ -44,31 +44,32 @@ const RemoveProduct = styled.button`
 `;
 class CartItem extends React.Component {
   handleaddQuantity = () => {
-    const newCart = this.props.cart.map((cartItem, index) => {
-      if (index !== this.props.index) return cartItem;
-      return {
-        ...cartItem,
-        quantity: cartItem.quantity + 1,
-      };
-    });
+    const newItem = this.props.cart[this.props.index];
+    const newCart = [...this.props.cart, newItem];
     cart(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
+    console.log(newCart);
   };
   handleRemoveQuantity = () => {
-    const newCart = this.props.cart.map((cartItem, index) => {
-      if (index !== this.props.index) return cartItem;
-      return {
-        ...cartItem,
-        quantity: cartItem.quantity - 1,
-      };
+    const indexOfObject = this.props.cart.findIndex((object) => {
+      return (
+        this.props.product.product.attributes
+          .map((att) => att.selectedValue)
+          .toString() ===
+        object.attributes.map((att) => att.selectedValue).toString()
+      );
     });
+
+    const newCart = [...this.props.cart.filter((_, i) => i !== indexOfObject)];
+    localStorage.setItem("cart", JSON.stringify(this.props.cart));
+    console.log(newCart);
     cart(newCart);
-    localStorage.setItem("cart", JSON.stringify(newCart));
   };
 
   render() {
-    const { product } = this.props;
-    if (product.quantity !== 0)
+    const product = this.props.product.product;
+    const itemquantity = this.props.product.quantity;
+    if (itemquantity > 0)
       return (
         <Wrapper>
           <Layout>
@@ -97,7 +98,7 @@ class CartItem extends React.Component {
           <ImgLayout>
             <QuantityWrapper>
               <AddProduct onClick={this.handleaddQuantity}>+</AddProduct>
-              <Typography.Price>{product.quantity}</Typography.Price>
+              <Typography.Price>{itemquantity}</Typography.Price>
               <RemoveProduct onClick={this.handleRemoveQuantity}>
                 -
               </RemoveProduct>

@@ -47,26 +47,26 @@ const RemoveProduct = styled.button`
 
 class CartItem extends React.Component {
   handleaddQuantity = () => {
-    const newCart = this.props.cart.map((cartItem, index) => {
-      if (index !== this.props.index) return cartItem;
-      return {
-        ...cartItem,
-        quantity: cartItem.quantity + 1,
-      };
-    });
+    const newItem = this.props.cart[this.props.index];
+    const newCart = [...this.props.cart, newItem];
     cart(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
+    console.log(newCart);
   };
   handleRemoveQuantity = () => {
-    const newCart = this.props.cart.map((cartItem, index) => {
-      if (index !== this.props.index) return cartItem;
-      return {
-        ...cartItem,
-        quantity: cartItem.quantity - 1,
-      };
+    const indexOfObject = this.props.cart.findIndex((object) => {
+      return (
+        this.props.product.product.attributes
+          .map((att) => att.selectedValue)
+          .toString() ===
+        object.attributes.map((att) => att.selectedValue).toString()
+      );
     });
+
+    const newCart = [...this.props.cart.filter((_, i) => i !== indexOfObject)];
+    localStorage.setItem("cart", JSON.stringify(this.props.cart));
+    console.log(newCart);
     cart(newCart);
-    localStorage.setItem("cart", JSON.stringify(newCart));
   };
   handleUpdateCartItem = (newAttribute) => {
     const newCart = this.props.cart.map((cartItem, index) => {
