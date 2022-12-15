@@ -58,7 +58,6 @@ export default class CartImage extends Component {
     return (
       <Wrapper>
         <SliderWrapper>
-          {console.log(imgsrc.length)}
           {imgsrc.length !== 1 ? (
             <SliderButton onClick={this.handlePrevSlide}>{"<"}</SliderButton>
           ) : null}

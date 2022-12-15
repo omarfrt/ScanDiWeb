@@ -48,7 +48,6 @@ class MiniCartAttributes extends React.Component {
 
   render() {
     const { product } = this.props;
-    console.log({ state: this.state });
     return (
       <>
         <PriceSection prices={product.prices} />

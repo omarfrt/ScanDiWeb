@@ -33,7 +33,6 @@ const ProductImgWrapper = styled.div`
 class PdpImageContainer extends React.Component {
   render() {
     const { inStock } = this.props.inStock;
-    console.log({ Boolean: inStock });
     return (
       <>
         <Wrapper>

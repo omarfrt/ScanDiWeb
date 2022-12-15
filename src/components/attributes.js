@@ -63,7 +63,6 @@ class Attributes extends React.Component {
 
   render() {
     const { product, onClickOutside } = this.props;
-    console.log({ state: Object.values(this.state).includes("") });
     return (
       <>
         {product.attributes.map((attb, index) => {

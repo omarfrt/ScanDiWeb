@@ -51,7 +51,6 @@ class CartItem extends React.Component {
     const newCart = [...this.props.cart, newItem];
     cart(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
-    console.log(newCart);
   };
   handleRemoveQuantity = () => {
     const indexOfObject = this.props.cart.findIndex((object) => {
@@ -65,7 +64,6 @@ class CartItem extends React.Component {
 
     const newCart = [...this.props.cart.filter((_, i) => i !== indexOfObject)];
     localStorage.setItem("cart", JSON.stringify(this.props.cart));
-    console.log(newCart);
     cart(newCart);
   };
   handleUpdateCartItem = (newAttribute) => {

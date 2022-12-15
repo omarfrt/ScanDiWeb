@@ -57,10 +57,7 @@ export const typeDefs = gql`
     symbol: String!
   }
 `;
-console.log({
-  currancy: localStorage.getItem("currency"),
-  cart: JSON.parse(localStorage.getItem("cart")),
-});
+
 export const cart = makeVar(JSON.parse(localStorage.getItem("cart")) || []);
 export const currency = makeVar(localStorage.getItem("currency") || "USD");
 const cache = new InMemoryCache({
@@ -95,7 +92,4 @@ root.render(
   </ApolloProvider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
