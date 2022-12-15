@@ -10,6 +10,8 @@ import PopupAttb from "./popupAttb";
 
 const Cover = styled.img`
   opacity: 1;
+  width: 354px;
+  height: 330px;
 `;
 const Title = styled(Typography.PL)`
   color: #1d1f22;
@@ -103,7 +105,7 @@ class ProductCard extends React.Component {
         isDisabled={!inStock}
       >
         <ImgDiv>
-          <Cover src={gallery[0]} alt="Product" width="354px" height="330px" />
+          <Cover src={gallery[0]} alt="Product" />
           {outOfStock}
           {attributes.length === 0 ? (
             <Query query={CART}>
