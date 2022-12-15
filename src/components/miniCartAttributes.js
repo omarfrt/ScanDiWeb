@@ -26,7 +26,7 @@ const Color = styled.button`
   width: 20px;
   height: 20px;
   border: ${(props) =>
-    props.selected ? "3px solid #5ECE7B" : "1px solid white"};
+    props.selected ? "3px solid #5ECE7B" : "1px solid black"};
   background-color: ${(props) => props.color};
 `;
 const Price = styled.div`
